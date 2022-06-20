@@ -1,0 +1,6 @@
+name: Bingo
+version: '${project.version}'
+main: com.ja90n.bingo.Bingo
+api-version: 1.19
+commands:
+  bingo:
