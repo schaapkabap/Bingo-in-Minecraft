@@ -56,8 +56,6 @@ public class BingoCardEvent implements Listener {
                         Bukkit.getPlayer(uuid).sendMessage(ChatColor.LIGHT_PURPLE + event.getWhoClicked().getName() + " has won the game!");
                     }
                     bingo.getGame().stopGame();
-                } else {
-                    new WrongClickRunable(event.getClickedInventory(),event.getSlot(),clickedItem.getItemMeta().getDisplayName(),bingo);
                 }
             }
         }

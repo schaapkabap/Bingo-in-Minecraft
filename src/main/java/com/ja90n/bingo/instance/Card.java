@@ -112,7 +112,7 @@ public class Card {
         ItemMeta framemeta = frame.getItemMeta();
         framemeta.setDisplayName(" ");
         frame.setItemMeta(framemeta);
-        for (int i : new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,16,17,18,19,25,26,27,28,34,35,36,37,43,44,45,46,52,53}) {
+        for (int i : new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,16,17,18,25,26,27,28,34,35,36,37,43,44,45,46,52,53}) {
             inventory.setItem(i, frame);
         }
         Bukkit.getPlayer(uuid).sendMessage("gemeratomg done");
