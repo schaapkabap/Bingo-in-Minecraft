@@ -42,61 +42,100 @@ public class MainMenuGui {
         if (game.getGameState().equals(GameState.OFF)){
             ItemStack statusOff = new ItemStack(Material.RED_CONCRETE);
             ItemMeta statusOffMeta = statusOff.getItemMeta();
-            statusOffMeta.setDisplayName("Status: " + ChatColor.RED + "Inactive");
+            statusOffMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.RED + "Inactive");
             statusOff.setItemMeta(statusOffMeta);
             menu.setItem(20,statusOff);
         } else {
             ItemStack statusOn = new ItemStack(Material.GREEN_CONCRETE);
             ItemMeta statusOnMeta = statusOn.getItemMeta();
             if (game.getGameState().equals(GameState.REQRUITING)){
-                statusOnMeta.setDisplayName("Status: " + ChatColor.GREEN + "Recruiting");
+                statusOnMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Recruiting");
             } else if (game.getGameState().equals(GameState.LINE)){
-                statusOnMeta.setDisplayName("Status: " + ChatColor.RED + "Line");
+                statusOnMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.RED + "Line");
             } else {
-                statusOnMeta.setDisplayName("Status: " + ChatColor.RED + "Full");
+                statusOnMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.RED + "Full");
             }
             statusOn.setItemMeta(statusOnMeta);
             menu.setItem(20,statusOn);
         }
 
-        // Join button
-        if (game.getGameState().equals(GameState.OFF)){
-            ItemStack join = new ItemStack(Material.BARRIER);
-            ItemMeta joinMeta = join.getItemMeta();
-            joinMeta.setDisplayName(ChatColor.RED + "Game inactive");
-            join.setItemMeta(joinMeta);
+        // Join / leave button
+        if (game.getPlayers().containsKey(uuid)){
+            if (game.getGameState().equals(GameState.OFF)){
+                ItemStack broken = new ItemStack(Material.CHAIN);
+                ItemMeta brokenMeta = broken.getItemMeta();
+                brokenMeta.setDisplayName(ChatColor.RED + "Send a picture of this for 1 euro to Ja90n (one time use)");
+                broken.setItemMeta(brokenMeta);
 
-            menu.setItem(22,join);
-        } else if (game.getGameState().equals(GameState.REQRUITING)){
-            ItemStack join = new ItemStack(Material.PAPER);
-            ItemMeta joinMeta = join.getItemMeta();
-            joinMeta.setDisplayName(ChatColor.GREEN + "JOIN");
+                menu.setItem(22,broken);
+            } else if (game.getGameState().equals(GameState.REQRUITING)){
+                ItemStack leave = new ItemStack(Material.BARRIER);
+                ItemMeta leaveMeta = leave.getItemMeta();
+                leaveMeta.setDisplayName(ChatColor.RED + "Leave");
 
-            // Setting lore
-            List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
-            for (UUID target : game.getPlayers().keySet()){
-                lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                // Setting lore
+                if (!game.getPlayers().isEmpty()) {
+                    List<String> lore = new ArrayList<>();
+                    lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                    for (UUID target : game.getPlayers().keySet()) {
+                        lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                    }
+                    leaveMeta.setLore(lore);
+                }
+
+                leave.setItemMeta(leaveMeta);
+
+                menu.setItem(22,leave);
+            } else {
+                ItemStack card = new ItemStack(Material.PAPER);
+                ItemMeta cardMeta = card.getItemMeta();
+                cardMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Bingo card");
+                card.setItemMeta(cardMeta);
+
+                menu.setItem(22,card);
             }
-            joinMeta.setLore(lore);
-            join.setItemMeta(joinMeta);
-
-            menu.setItem(22,join);
         } else {
-            ItemStack join = new ItemStack(Material.MAP);
-            ItemMeta joinMeta = join.getItemMeta();
-            joinMeta.setDisplayName(ChatColor.GREEN + "Game active");
+            if (game.getGameState().equals(GameState.OFF)){
+                ItemStack join = new ItemStack(Material.BARRIER);
+                ItemMeta joinMeta = join.getItemMeta();
+                joinMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.RED + "Inactive");
+                join.setItemMeta(joinMeta);
 
-            // Setting lore
-            List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
-            for (UUID target : game.getPlayers().keySet()){
-                lore.add(ChatColor.RED + Bukkit.getPlayer(target).getDisplayName());
+                menu.setItem(22,join);
+            } else if (game.getGameState().equals(GameState.REQRUITING)){
+                ItemStack join = new ItemStack(Material.PAPER);
+                ItemMeta joinMeta = join.getItemMeta();
+                joinMeta.setDisplayName(ChatColor.GREEN + "JOIN");
+
+                // Setting lore
+                if (!game.getPlayers().isEmpty()){
+                    List<String> lore = new ArrayList<>();
+                    lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                    for (UUID target : game.getPlayers().keySet()){
+                        lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                    }
+                    joinMeta.setLore(lore);
+                }
+                join.setItemMeta(joinMeta);
+
+                menu.setItem(22,join);
+            } else {
+                ItemStack join = new ItemStack(Material.MAP);
+                ItemMeta joinMeta = join.getItemMeta();
+                joinMeta.setDisplayName(ChatColor.GREEN + "Game active");
+
+                // Setting lore
+                List<String> lore = new ArrayList<>();
+                lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                for (UUID target : game.getPlayers().keySet()){
+                    lore.add(ChatColor.RED + Bukkit.getPlayer(target).getDisplayName());
+                }
+                joinMeta.setLore(lore);
+                join.setItemMeta(joinMeta);
+
+                menu.setItem(22,join);
             }
-            joinMeta.setLore(lore);
-            join.setItemMeta(joinMeta);
 
-            menu.setItem(22,join);
         }
 
         // Host button

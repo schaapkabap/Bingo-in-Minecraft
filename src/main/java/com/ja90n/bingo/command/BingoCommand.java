@@ -27,6 +27,11 @@ public class BingoCommand implements CommandExecutor {
             return false;
         } else {
             Player player = (Player) sender;
+            try {
+                for (int in : bingo.getGame().getCard(player.getUniqueId()).getIndex().keySet()){
+                    player.sendMessage(String.valueOf(in));
+                }
+            } catch (Exception ignored){}
             new MainMenuGui(player.getUniqueId(),bingo);
         }
         return false;

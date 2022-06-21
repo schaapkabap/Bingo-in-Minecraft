@@ -2,6 +2,12 @@ package com.ja90n.bingo.instance;
 
 import com.ja90n.bingo.Bingo;
 import com.ja90n.bingo.GameState;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
 
@@ -27,6 +33,7 @@ public class Game {
         }
         for (UUID playerUUID : players.keySet()){
             Card card = new Card(playerUUID,this,bingo);
+            card.generateCard();
             cards.put(playerUUID,card);
         }
         state = GameState.LINE;
@@ -34,9 +41,25 @@ public class Game {
 
     public void stopGame() {
         for (UUID playerUUID : players.keySet()){
+            Bukkit.getPlayer(playerUUID).closeInventory();
             cards.remove(playerUUID);
         }
+        players.clear();
         state = GameState.OFF;
+    }
+
+    public void callNumber (int number){
+        numbers.remove(number);
+        numbers.put(number,true);
+        for (UUID uuid : players.keySet()){
+            ItemStack itemStack = new ItemStack(Material.MAP);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            itemMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Called number: " +ChatColor.WHITE  + number + ChatColor.LIGHT_PURPLE +"!");
+            itemStack.setItemMeta(itemMeta);
+
+            getCard(uuid).getInventory().setItem(28,itemStack);
+            Bukkit.getPlayer(uuid).sendMessage(ChatColor.LIGHT_PURPLE + "Called number: " +ChatColor.WHITE  + number + ChatColor.LIGHT_PURPLE +"!");
+        }
     }
 
     public Map<Integer, Boolean> getNumbers(){
@@ -48,17 +71,22 @@ public class Game {
     }
 
     public Card getCard (UUID uuid){
-        if (cards.containsValue(uuid)){
-            return cards.get(uuid);
-        } else {
-            return null;
-        }
+        return cards.getOrDefault(uuid, null);
     }
 
     public void addPlayer(UUID uuid){
         players.put(uuid,false);
+        Bukkit.getPlayer(uuid).sendMessage(ChatColor.GREEN + "You have joined the bingo!");
+    }
+
+    public void removePlayer(UUID uuid){
+        players.remove(uuid,false);
+        Bukkit.getPlayer(uuid).sendMessage(ChatColor.RED + "You have leaved the bingo!");
     }
 
     public GameState getGameState () { return state; }
+    public void setGameState (GameState gameState){
+        state = gameState;
+    }
     public HashMap<UUID,Boolean> getPlayers () { return players;}
 }

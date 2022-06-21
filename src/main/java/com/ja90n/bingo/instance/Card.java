@@ -16,15 +16,16 @@ public class Card {
     private Game game;
     private Bingo bingo;
     private Inventory inventory;
+    //Index and Number
     private Map<Integer,Integer> index;
-    private Map<Integer, Boolean> numbersCalled;
+    private Map<Integer, Boolean> numbersClicked;
 
     public Card (UUID uuid, Game game, Bingo bingo){
         this.uuid = uuid;
         this.game = game;
         this.bingo = bingo;
         index = new HashMap<>();
-        numbersCalled = new HashMap<>();
+        numbersClicked = new HashMap<>();
         inventory = Bukkit.createInventory(Bukkit.getPlayer(uuid), 54, ChatColor.LIGHT_PURPLE + "Bingo Card");
     }
 
@@ -33,7 +34,8 @@ public class Card {
     }
 
     public void generateCard(){
-        for (int i = 0; i < 24; i++){
+        for (int i = 0; i <= 24; i++){
+            numbersClicked.put(i,false);
             if (i == 0 || i == 5 | i == 10 || i == 15 || i == 20){
                 boolean check = true;
                 while (check){
@@ -99,6 +101,13 @@ public class Card {
             timesRun++;
         }
 
+        ItemStack bingoButton = new ItemStack(Material.PINK_CONCRETE);
+        ItemMeta bingoButtonMeta = bingoButton.getItemMeta();
+        bingoButtonMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "BINGO");
+        bingoButton.setItemMeta(bingoButtonMeta);
+
+        inventory.setItem(19,bingoButton);
+
         ItemStack frame = new ItemStack(Material.PINK_STAINED_GLASS_PANE);
         ItemMeta framemeta = frame.getItemMeta();
         framemeta.setDisplayName(" ");
@@ -109,6 +118,33 @@ public class Card {
         Bukkit.getPlayer(uuid).sendMessage("gemeratomg done");
     }
 
+    public boolean bingoCall(){
+
+        if (numbersClicked.get(0) && numbersClicked.get(1)&& numbersClicked.get(2)&& numbersClicked.get(3)&&numbersClicked.get(4)){
+            return true;
+        } else if (numbersClicked.get(5) && numbersClicked.get(6)&& numbersClicked.get(7)&& numbersClicked.get(8)&&numbersClicked.get(9)){
+            return true;
+        } else if (numbersClicked.get(10) && numbersClicked.get(11)&& numbersClicked.get(12)&& numbersClicked.get(13)&&numbersClicked.get(14)){
+            return true;
+        } else if (numbersClicked.get(15) && numbersClicked.get(16)&& numbersClicked.get(17)&& numbersClicked.get(18)&&numbersClicked.get(19)){
+            return true;
+        } else if (numbersClicked.get(20) && numbersClicked.get(21)&& numbersClicked.get(22)&& numbersClicked.get(23)&&numbersClicked.get(24)){
+            return true;
+        } else if (numbersClicked.get(0) && numbersClicked.get(5)&& numbersClicked.get(10)&& numbersClicked.get(15)&&numbersClicked.get(20)){
+            return true;
+        } else if (numbersClicked.get(1) && numbersClicked.get(6)&& numbersClicked.get(11)&& numbersClicked.get(16)&&numbersClicked.get(21)){
+            return true;
+        } else if (numbersClicked.get(2) && numbersClicked.get(7)&& numbersClicked.get(12)&& numbersClicked.get(17)&&numbersClicked.get(22)){
+            return true;
+        } else if (numbersClicked.get(3) && numbersClicked.get(8)&& numbersClicked.get(13)&& numbersClicked.get(18)&&numbersClicked.get(23)){
+            return true;
+        } else if (numbersClicked.get(4) && numbersClicked.get(9)&& numbersClicked.get(14)&& numbersClicked.get(19)&&numbersClicked.get(24)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public int randomNumber(int up, int down){
         Random r = new Random();
         int low = up;
@@ -117,8 +153,18 @@ public class Card {
         return result;
     }
 
+    public int numberToIndex(int number){
+        for (int i : index.keySet()){
+            if (index.get(i) == number){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public Inventory getInventory () {
         return inventory;
     }
-
+    public Map<Integer,Integer> getIndex () {return index;}
+    public Map<Integer,Boolean> getNumbersClicked () {return numbersClicked; }
 }
