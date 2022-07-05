@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
 
@@ -35,6 +34,8 @@ public class Game {
             Card card = new Card(playerUUID,this,bingo);
             card.generateCard();
             cards.put(playerUUID,card);
+            Bukkit.getPlayer(playerUUID).sendMessage(ChatColor.LIGHT_PURPLE + "The bingo game has been started!");
+            card.openCard();
         }
         state = GameState.LINE;
     }
@@ -44,6 +45,8 @@ public class Game {
             Bukkit.getPlayer(playerUUID).closeInventory();
             cards.remove(playerUUID);
         }
+        cards.clear();
+        numbers.clear();
         players.clear();
         state = GameState.OFF;
     }

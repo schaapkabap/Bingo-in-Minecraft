@@ -58,9 +58,11 @@ public class HostMenuGui {
             // Setting lore
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Recruiting");
-            lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
-            for (UUID target : game.getPlayers().keySet()){
-                lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+            if (!game.getPlayers().isEmpty()){
+                lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                for (UUID target : game.getPlayers().keySet()){
+                    lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                }
             }
 
             statusMeta.setLore(lore);
@@ -87,7 +89,6 @@ public class HostMenuGui {
             }
 
             statusMeta.setLore(lore);
-
             status.setItemMeta(statusMeta);
             menu.setItem(20,status);
         }

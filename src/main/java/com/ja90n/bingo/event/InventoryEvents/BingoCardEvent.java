@@ -1,7 +1,7 @@
 package com.ja90n.bingo.event.InventoryEvents;
 
 import com.ja90n.bingo.Bingo;
-import com.ja90n.bingo.instance.Game;
+import com.ja90n.bingo.GameState;
 import com.ja90n.bingo.runable.WrongClickRunable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -52,10 +52,20 @@ public class BingoCardEvent implements Listener {
                 }
             } else if (event.getSlot() == 19){
                 if (bingo.getGame().getCard(event.getWhoClicked().getUniqueId()).bingoCall()){
-                    for (UUID uuid : bingo.getGame().getPlayers().keySet()){
-                        Bukkit.getPlayer(uuid).sendMessage(ChatColor.LIGHT_PURPLE + event.getWhoClicked().getName() + " has won the game!");
+                    if (bingo.getGame().getGameState().equals(GameState.LINE)){
+                        for (UUID uuid : bingo.getGame().getPlayers().keySet()){
+                            Bukkit.getPlayer(uuid).sendMessage(event.getWhoClicked().getName() + ChatColor.LIGHT_PURPLE + " has completed a row!");
+                            Bukkit.getPlayer(uuid).sendMessage(ChatColor.LIGHT_PURPLE + "Moving on to full card!");
+                        }
+                        bingo.getGame().setGameState(GameState.FULL);
+                    } else {
+                        for (UUID uuid : bingo.getGame().getPlayers().keySet()){
+                            Bukkit.getPlayer(uuid).sendMessage(event.getWhoClicked().getName() + ChatColor.LIGHT_PURPLE + " has completed the full card!");
+                            Bukkit.getPlayer(uuid).sendMessage(ChatColor.LIGHT_PURPLE + "Stopping the game!");
+                            Bukkit.getPlayer(uuid).sendTitle(event.getWhoClicked().getName() + ChatColor.LIGHT_PURPLE + " has completed the full card!", ChatColor.LIGHT_PURPLE + "Stopping the game!");
+                        }
+                        bingo.getGame().stopGame();
                     }
-                    bingo.getGame().stopGame();
                 }
             }
         }

@@ -42,22 +42,28 @@ public class HostMenuEvent implements Listener {
 
                     // Setting lore
                     List<String> lore = new ArrayList<>();
-                    lore.add("Status: " + ChatColor.GREEN + "Recruiting");
-                    lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
-                    for (UUID target : bingo.getGame().getPlayers().keySet()){
-                        lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                    lore.add(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Recruiting");
+                    if (!bingo.getGame().getPlayers().isEmpty()){
+                        lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                        for (UUID target : bingo.getGame().getPlayers().keySet()){
+                            lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                        }
+                        statusMeta.setLore(lore);
                     }
-                    statusMeta.setLore(lore);
                     status.setItemMeta(statusMeta);
-
                     event.getClickedInventory().setItem(20,status);
 
-                } else if ( bingo.getGame().getGameState().equals(GameState.REQRUITING)){
-                    bingo.getGame().startGame();
+                } else if (bingo.getGame().getGameState().equals(GameState.REQRUITING)){
+                    if (bingo.getGame().getPlayers().size() >= 2){
+                        bingo.getGame().startGame();
+                    } else {
+                        player.sendMessage(ChatColor.RED + "Not enough players to start the game!");
+                    }
                 } else {
                     for (UUID uuid : bingo.getGame().getPlayers().keySet()){
                         Bukkit.getPlayer(uuid).sendMessage(ChatColor.RED + "Game has been stopped");
                         bingo.getGame().stopGame();
+                        event.getWhoClicked().sendMessage(ChatColor.RED + "Game has been stopped!");
                     }
                 }
             } else if (event.getSlot() == 24) {

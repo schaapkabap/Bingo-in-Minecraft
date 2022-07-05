@@ -1,6 +1,7 @@
 package com.ja90n.bingo.instance;
 
 import com.ja90n.bingo.Bingo;
+import com.ja90n.bingo.GameState;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -115,34 +116,47 @@ public class Card {
         for (int i : new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,16,17,18,25,26,27,28,34,35,36,37,43,44,45,46,52,53}) {
             inventory.setItem(i, frame);
         }
-        Bukkit.getPlayer(uuid).sendMessage("gemeratomg done");
     }
 
     public boolean bingoCall(){
-
-        if (numbersClicked.get(0) && numbersClicked.get(1)&& numbersClicked.get(2)&& numbersClicked.get(3)&&numbersClicked.get(4)){
-            return true;
-        } else if (numbersClicked.get(5) && numbersClicked.get(6)&& numbersClicked.get(7)&& numbersClicked.get(8)&&numbersClicked.get(9)){
-            return true;
-        } else if (numbersClicked.get(10) && numbersClicked.get(11)&& numbersClicked.get(12)&& numbersClicked.get(13)&&numbersClicked.get(14)){
-            return true;
-        } else if (numbersClicked.get(15) && numbersClicked.get(16)&& numbersClicked.get(17)&& numbersClicked.get(18)&&numbersClicked.get(19)){
-            return true;
-        } else if (numbersClicked.get(20) && numbersClicked.get(21)&& numbersClicked.get(22)&& numbersClicked.get(23)&&numbersClicked.get(24)){
-            return true;
-        } else if (numbersClicked.get(0) && numbersClicked.get(5)&& numbersClicked.get(10)&& numbersClicked.get(15)&&numbersClicked.get(20)){
-            return true;
-        } else if (numbersClicked.get(1) && numbersClicked.get(6)&& numbersClicked.get(11)&& numbersClicked.get(16)&&numbersClicked.get(21)){
-            return true;
-        } else if (numbersClicked.get(2) && numbersClicked.get(7)&& numbersClicked.get(12)&& numbersClicked.get(17)&&numbersClicked.get(22)){
-            return true;
-        } else if (numbersClicked.get(3) && numbersClicked.get(8)&& numbersClicked.get(13)&& numbersClicked.get(18)&&numbersClicked.get(23)){
-            return true;
-        } else if (numbersClicked.get(4) && numbersClicked.get(9)&& numbersClicked.get(14)&& numbersClicked.get(19)&&numbersClicked.get(24)){
-            return true;
-        } else {
-            return false;
+        if (game.getGameState().equals(GameState.LINE)){
+            if (numbersClicked.get(0) && numbersClicked.get(1)&& numbersClicked.get(2)&& numbersClicked.get(3)&&numbersClicked.get(4)){
+                return true;
+            } else if (numbersClicked.get(5) && numbersClicked.get(6)&& numbersClicked.get(7)&& numbersClicked.get(8)&&numbersClicked.get(9)){
+                return true;
+            } else if (numbersClicked.get(10) && numbersClicked.get(11)&& numbersClicked.get(12)&& numbersClicked.get(13)&&numbersClicked.get(14)){
+                return true;
+            } else if (numbersClicked.get(15) && numbersClicked.get(16)&& numbersClicked.get(17)&& numbersClicked.get(18)&&numbersClicked.get(19)){
+                return true;
+            } else if (numbersClicked.get(20) && numbersClicked.get(21)&& numbersClicked.get(22)&& numbersClicked.get(23)&&numbersClicked.get(24)){
+                return true;
+            } else if (numbersClicked.get(0) && numbersClicked.get(5)&& numbersClicked.get(10)&& numbersClicked.get(15)&&numbersClicked.get(20)){
+                return true;
+            } else if (numbersClicked.get(1) && numbersClicked.get(6)&& numbersClicked.get(11)&& numbersClicked.get(16)&&numbersClicked.get(21)){
+                return true;
+            } else if (numbersClicked.get(2) && numbersClicked.get(7)&& numbersClicked.get(12)&& numbersClicked.get(17)&&numbersClicked.get(22)){
+                return true;
+            } else if (numbersClicked.get(3) && numbersClicked.get(8)&& numbersClicked.get(13)&& numbersClicked.get(18)&&numbersClicked.get(23)){
+                return true;
+            } else if (numbersClicked.get(4) && numbersClicked.get(9)&& numbersClicked.get(14)&& numbersClicked.get(19)&&numbersClicked.get(24)){
+                return true;
+            } else if (numbersClicked.get(0) && numbersClicked.get(6)&& numbersClicked.get(12)&& numbersClicked.get(18)&&numbersClicked.get(24)) {
+                return true;
+            } else if (numbersClicked.get(4) && numbersClicked.get(8)&& numbersClicked.get(12)&& numbersClicked.get(16)&&numbersClicked.get(20)){
+                return true;
+            } else {
+                return false;
+            }
+        } else if (game.getGameState().equals(GameState.FULL)){
+            for (int i = 0; i <= 24; i++){
+                if (!numbersClicked.get(i)){
+                    return false;
+                } else if (i==24){
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
     public int randomNumber(int up, int down){
