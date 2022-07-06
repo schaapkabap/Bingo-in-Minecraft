@@ -32,7 +32,7 @@ public class BingoCardEvent implements Listener {
         if (event.getView().getTitle().equals(ChatColor.LIGHT_PURPLE + "Bingo Card") && event.getCurrentItem() != null){
             event.setCancelled(true);
             clickedItem = event.getCurrentItem();
-            if (clickedItem.getType().equals(Material.PAPER) || event.getSlot() >= 54){
+            if (clickedItem.getType().equals(Material.PAPER) && event.getSlot() <= 54){
                 int number;
                 Player player = (Player) event.getWhoClicked();
                 number = Integer.parseInt(clickedItem.getItemMeta().getDisplayName());
