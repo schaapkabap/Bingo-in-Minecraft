@@ -56,6 +56,12 @@ public class HostMenuEvent implements Listener {
                 } else if (bingo.getGame().getGameState().equals(GameState.REQRUITING)){
                     if (bingo.getGame().getPlayers().size() >= 2){
                         bingo.getGame().startGame();
+                        for (Player target : Bukkit.getOnlinePlayers()){
+                            if (target.getOpenInventory().getTitle().equals(ChatColor.LIGHT_PURPLE + "Main menu")){
+                                target.closeInventory();
+                                new MainMenuGui(target.getUniqueId(),bingo);
+                            }
+                        }
                     } else {
                         player.sendMessage(ChatColor.RED + "Not enough players to start the game!");
                     }
