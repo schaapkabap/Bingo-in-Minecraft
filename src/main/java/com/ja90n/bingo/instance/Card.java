@@ -113,9 +113,16 @@ public class Card {
         ItemMeta framemeta = frame.getItemMeta();
         framemeta.setDisplayName(" ");
         frame.setItemMeta(framemeta);
-        for (int i : new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,16,17,18,25,26,27,28,34,35,36,37,43,44,45,46,52,53}) {
+        for (int i : new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10,16,17,18,25,26,27,28,34,35,36,37,43,44,45,46,52,53}) {
             inventory.setItem(i, frame);
         }
+
+        // Back button
+        ItemStack backButton = new ItemStack(Material.ARROW);
+        ItemMeta backButtonMeta = backButton.getItemMeta();
+        backButtonMeta.setDisplayName(ChatColor.WHITE + "Back to main menu");
+        backButton.setItemMeta(backButtonMeta);
+        inventory.setItem(0,backButton);
     }
 
     public boolean bingoCall(){
@@ -179,6 +186,6 @@ public class Card {
     public Inventory getInventory () {
         return inventory;
     }
-    public Map<Integer,Integer> getIndex () {return index;}
+
     public Map<Integer,Boolean> getNumbersClicked () {return numbersClicked; }
 }

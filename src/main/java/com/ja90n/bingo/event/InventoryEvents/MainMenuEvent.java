@@ -3,7 +3,6 @@ package com.ja90n.bingo.event.InventoryEvents;
 import com.ja90n.bingo.Bingo;
 import com.ja90n.bingo.GameState;
 import com.ja90n.bingo.gui.HostMenuGui;
-import com.ja90n.bingo.instance.Game;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

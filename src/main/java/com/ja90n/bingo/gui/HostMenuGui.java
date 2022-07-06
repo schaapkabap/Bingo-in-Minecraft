@@ -31,7 +31,7 @@ public class HostMenuGui {
         ItemMeta framemeta = frame.getItemMeta();
         framemeta.setDisplayName(" ");
         frame.setItemMeta(framemeta);
-        for (int i : new int[]{0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44}){
+        for (int i : new int[]{1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,40,41,42,43,44}){
             menu.setItem(i, frame);
         }
 
@@ -92,6 +92,13 @@ public class HostMenuGui {
             status.setItemMeta(statusMeta);
             menu.setItem(20,status);
         }
+
+        // Back button
+        ItemStack backButton = new ItemStack(Material.ARROW);
+        ItemMeta backButtonMeta = backButton.getItemMeta();
+        backButtonMeta.setDisplayName(ChatColor.WHITE + "Back to main menu");
+        backButton.setItemMeta(backButtonMeta);
+        menu.setItem(0,backButton);
 
         // Next number
         ItemStack number = new ItemStack(Material.PAPER);

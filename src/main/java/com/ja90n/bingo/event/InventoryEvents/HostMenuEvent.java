@@ -3,6 +3,7 @@ package com.ja90n.bingo.event.InventoryEvents;
 import com.ja90n.bingo.Bingo;
 import com.ja90n.bingo.GameState;
 import com.ja90n.bingo.gui.HostMenuGui;
+import com.ja90n.bingo.gui.MainMenuGui;
 import com.ja90n.bingo.instance.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -60,11 +60,13 @@ public class HostMenuEvent implements Listener {
                         player.sendMessage(ChatColor.RED + "Not enough players to start the game!");
                     }
                 } else {
+                    player.sendMessage(ChatColor.RED + "You have stopped the game!");
                     for (UUID uuid : bingo.getGame().getPlayers().keySet()){
-                        Bukkit.getPlayer(uuid).sendMessage(ChatColor.RED + "Game has been stopped");
-                        bingo.getGame().stopGame();
-                        event.getWhoClicked().sendMessage(ChatColor.RED + "Game has been stopped!");
+                        if (!uuid.equals(player.getUniqueId())){
+                            Bukkit.getPlayer(uuid).sendMessage(ChatColor.RED + "Game has been stopped");
+                        }
                     }
+                    bingo.getGame().stopGame();
                 }
             } else if (event.getSlot() == 24) {
                 List<Integer> list = new ArrayList<>();
@@ -74,7 +76,8 @@ public class HostMenuEvent implements Listener {
                     }
                 }
                 if (list.isEmpty()){
-                    if (bingo.getGame().getGameState().equals(GameState.OFF) || bingo.getGame().getGameState().equals(GameState.REQRUITING)){
+                    if (bingo.getGame().getGameState().equals(GameState.OFF) ||
+                            bingo.getGame().getGameState().equals(GameState.REQRUITING)){
                         player.sendMessage(ChatColor.RED + "The game is not active");
                     } else {
                         player.sendMessage( ChatColor.GREEN + "All numbers are called!");
@@ -105,6 +108,9 @@ public class HostMenuEvent implements Listener {
 
                     bingo.getGame().callNumber(random);
                 }
+            } else if (event.getSlot() == 0){
+                player.closeInventory();
+                new MainMenuGui(player.getUniqueId(),bingo);
             }
         }
     }

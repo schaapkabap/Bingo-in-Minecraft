@@ -2,9 +2,11 @@ package com.ja90n.bingo.instance;
 
 import com.ja90n.bingo.Bingo;
 import com.ja90n.bingo.GameState;
+import com.ja90n.bingo.util.UpdateJoinLeaveButton;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -79,11 +81,21 @@ public class Game {
 
     public void addPlayer(UUID uuid){
         players.put(uuid,false);
+        for (Player player : Bukkit.getOnlinePlayers()){
+            if (player.getOpenInventory().getTitle().equals(ChatColor.LIGHT_PURPLE + "Main menu")){
+                new  UpdateJoinLeaveButton(player.getOpenInventory(),player.getUniqueId(),this);
+            }
+        }
         Bukkit.getPlayer(uuid).sendMessage(ChatColor.GREEN + "You have joined the bingo!");
     }
 
     public void removePlayer(UUID uuid){
         players.remove(uuid,false);
+        for (Player player : Bukkit.getOnlinePlayers()){
+            if (player.getOpenInventory().getTitle().equals(ChatColor.LIGHT_PURPLE + "Main menu")){
+                new  UpdateJoinLeaveButton(player.getOpenInventory(),player.getUniqueId(),this);
+            }
+        }
         Bukkit.getPlayer(uuid).sendMessage(ChatColor.RED + "You have leaved the bingo!");
     }
 
