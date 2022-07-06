@@ -12,14 +12,11 @@ The main menu:
 Bingo card:
 
 
-![image](https://user-images.githubusercontent.com/81578391/174866239-4f8b4c04-f65b-4f68-8036-b888ea77cb2a.png)
-![/image](https://user-images.githubusercontent.com/81578391/174866260-c3505778-75fc-43b3-a089-4577a0fd24b1.png)
+![image](https://user-images.githubusercontent.com/81578391/177551801-b8a4ea9b-ef44-4121-9efb-408cbe26b58c.png)
 
 
 Host menu:
 
-
-![image](https://user-images.githubusercontent.com/81578391/174866166-23df0af0-949b-4754-93bd-10225db1421b.png)
-![image](https://user-images.githubusercontent.com/81578391/174866178-32c0c9d6-2b78-4fdf-ac15-dfd2199671ac.png)
+![Naamloos](https://user-images.githubusercontent.com/81578391/177551731-cc8ca43e-dfd9-4221-ad55-4bd35df10bee.png)
 
 If you have any questions, contact me on Discord: Ja90n#5855
