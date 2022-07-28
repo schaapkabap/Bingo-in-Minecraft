@@ -1,0 +1,42 @@
+#Menu names
+bingo-card: 'Tarjeta de Bingo'
+host-menu: 'Menú Anfitrión'
+main-menu: 'Menú Principal'
+
+#Messages
+bingo-start-message: '¡El bingo ha comenzado!'
+bingo-call-messgee: ' ha llamado un bingo!'
+completed-row-message: ' ha completado una fila!'
+completed-full-message: ' ha completado la tarjeta completamente!'
+going-to-full-card-message: '¡Moviéndose a tarjeta completa!'
+stopping-the-game-message: '¡Parando el juego!'
+game-is-not-active-message: 'El juego no está activo'
+all-numbers-are-called-messsge: '¡Todos los números han sido llamados!'
+you-have-stopped-the-game-message: '¡Has detenido el juego!'
+game-has-been-stopped-message: 'El juego ha sido detenido'
+not-enough-players-to-start-the-game-message: '¡No hay suficientes jugadores para comenzar el juego!'
+you-dont-have-permission: '¡Usted no tiene permiso para hacer esto!'
+game-is-already-active: 'No puedes unirte ahora, el juego ya está activo'
+game-is-inactive: 'No puedes unirte en este momento, el juego está inactivo'
+called-number: 'Número llamado: '
+join-message: '¡Te has unido al bingo!'
+leave-message: '¡Has salido del bingo!'
+
+#Buttons
+force-stop-game-button: 'Forzar parada del juego'
+activate-game-button: 'Activar juego'
+start-game-button: 'Comenzar el juego'
+back-to-main-menu-button: 'Volver al menú principal'
+next-number-button: 'Siguiente número'
+join-button: 'Unirse al juego'
+leave-button: 'Abandonar el juego'
+host-menu-button: 'Menú del anfitrión'
+game-active-button: 'Juego activo'
+
+#Game status
+status: 'Estado: '
+inactive-status: 'Inactivo'
+recruiting-status: 'Reclutamiento'
+line-status: 'Línea'
+full-status: 'Completo'
+current-players: 'Jugadores actuales: '

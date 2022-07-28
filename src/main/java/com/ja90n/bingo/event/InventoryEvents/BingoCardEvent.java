@@ -1,6 +1,7 @@
 package com.ja90n.bingo.event.InventoryEvents;
 
 import com.ja90n.bingo.Bingo;
+import com.ja90n.bingo.ConfigManager;
 import com.ja90n.bingo.GameState;
 import com.ja90n.bingo.gui.MainMenuGui;
 import com.ja90n.bingo.runable.WrongClickRunable;
@@ -21,15 +22,17 @@ public class BingoCardEvent implements Listener {
 
     private Bingo bingo;
     private ItemStack clickedItem;
+    private ConfigManager configManager;
 
     public BingoCardEvent(Bingo bingo){
         this.bingo = bingo;
          bingo.getGame();
+         configManager = bingo.getConfigManager();
     }
 
     @EventHandler
     public void onInventoryClick (InventoryClickEvent event){
-        if (event.getView().getTitle().equals(ChatColor.LIGHT_PURPLE + "Bingo Card") && event.getCurrentItem() != null){
+        if (event.getView().getTitle().equals(configManager.getChatColor() + configManager.getMessage("bingo-card")) && event.getCurrentItem() != null){
             event.setCancelled(true);
             clickedItem = event.getCurrentItem();
             if (clickedItem.getType().equals(Material.PAPER) && event.getSlot() <= 54){
@@ -58,12 +61,12 @@ public class BingoCardEvent implements Listener {
                 }
             } else if (event.getSlot() == 19){
                 for (Player player : Bukkit.getOnlinePlayers()){
-                    if (player.getOpenInventory().getTitle().equals(ChatColor.LIGHT_PURPLE + "Host menu")){
+                    if (player.getOpenInventory().getTitle().equals(configManager.getChatColor() + configManager.getMessage("main-menu"))){
                         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
                         SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
                         skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(event.getWhoClicked().getUniqueId()));
                         skullMeta.setDisplayName(ChatColor.WHITE + event.getWhoClicked().getName() +
-                                ChatColor.LIGHT_PURPLE + " has called a bingo!");
+                                configManager.getChatColor() + configManager.getMessage("bingo-call-messgee"));
                         itemStack.setItemMeta(skullMeta);
 
                         player.getOpenInventory().setItem(22,itemStack);
@@ -73,18 +76,18 @@ public class BingoCardEvent implements Listener {
                     if (bingo.getGame().getGameState().equals(GameState.LINE)){
                         for (UUID uuid : bingo.getGame().getPlayers().keySet()){
                             Bukkit.getPlayer(uuid).sendMessage(
-                                    event.getWhoClicked().getName() + ChatColor.LIGHT_PURPLE + " has completed a row!");
-                            Bukkit.getPlayer(uuid).sendMessage(ChatColor.LIGHT_PURPLE + "Moving on to full card!");
+                                    event.getWhoClicked().getName() + configManager.getChatColor() + configManager.getMessage("completed-row-message"));
+                            Bukkit.getPlayer(uuid).sendMessage(configManager.getChatColor() + configManager.getMessage("going-to-full-card-message"));
                         }
                         bingo.getGame().setGameState(GameState.FULL);
                     } else {
                         for (UUID uuid : bingo.getGame().getPlayers().keySet()){
                             Bukkit.getPlayer(uuid).sendMessage(event.getWhoClicked().getName()
-                                    + ChatColor.LIGHT_PURPLE + " has completed the full card!");
-                            Bukkit.getPlayer(uuid).sendMessage(ChatColor.LIGHT_PURPLE + "Stopping the game!");
+                                    + configManager.getChatColor() + configManager.getMessage("completed-full-message"));
+                            Bukkit.getPlayer(uuid).sendMessage(configManager.getChatColor() + configManager.getMessage("stopping-the-game-message"));
                             Bukkit.getPlayer(uuid).sendTitle(event.getWhoClicked().getName() +
-                                    ChatColor.LIGHT_PURPLE + " has completed the full card!",
-                                    ChatColor.LIGHT_PURPLE + "Stopping the game!");
+                                            configManager.getChatColor() + configManager.getMessage("completed-full-message"),
+                                    configManager.getChatColor() + configManager.getMessage("stopping-the-game-message"));
                         }
                         bingo.getGame().stopGame();
                     }

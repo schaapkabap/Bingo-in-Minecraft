@@ -1,6 +1,7 @@
 package com.ja90n.bingo.gui;
 
 import com.ja90n.bingo.Bingo;
+import com.ja90n.bingo.ConfigManager;
 import com.ja90n.bingo.GameState;
 import com.ja90n.bingo.instance.Game;
 import org.bukkit.Bukkit;
@@ -19,15 +20,17 @@ public class HostMenuGui {
 
     private Player player;
     private Game game;
+    private ConfigManager configManager;
 
     public HostMenuGui(UUID uuid, Bingo bingo) {
+        configManager = bingo.getConfigManager();
         player = Bukkit.getPlayer(uuid);
         game = bingo.getGame();
 
-        Inventory menu = Bukkit.createInventory(player,45, ChatColor.LIGHT_PURPLE + "Host menu");
+        Inventory menu = Bukkit.createInventory(player,45, configManager.getChatColor() + configManager.getMessage("host-menu"));
 
         // Frame
-        ItemStack frame = new ItemStack(Material.PINK_STAINED_GLASS_PANE);
+        ItemStack frame = configManager.getFrame();
         ItemMeta framemeta = frame.getItemMeta();
         framemeta.setDisplayName(" ");
         frame.setItemMeta(framemeta);
@@ -41,11 +44,11 @@ public class HostMenuGui {
         if (game.getGameState().equals(GameState.OFF)){
             ItemStack status = new ItemStack(Material.RED_CONCRETE);
             ItemMeta statusMeta = status.getItemMeta();
-            statusMeta.setDisplayName(ChatColor.GREEN + "Activate game");
+            statusMeta.setDisplayName(ChatColor.GREEN + configManager.getMessage("activate-game-button"));
 
             // Setting lore
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.WHITE + "Status: " + ChatColor.RED + "Inactive");
+            lore.add(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.RED + configManager.getMessage("inactive-status"));
             statusMeta.setLore(lore);
 
             status.setItemMeta(statusMeta);
@@ -53,15 +56,15 @@ public class HostMenuGui {
         } else if (game.getGameState().equals(GameState.REQRUITING)){
             ItemStack status = new ItemStack(Material.GREEN_CONCRETE);
             ItemMeta statusMeta = status.getItemMeta();
-            statusMeta.setDisplayName(ChatColor.GREEN + "Start game");
+            statusMeta.setDisplayName(ChatColor.GREEN + configManager.getMessage("start-game-button"));
 
             // Setting lore
             List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Recruiting");
+            lore.add(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.GREEN + configManager.getMessage("recruiting-status"));
             if (!game.getPlayers().isEmpty()){
-                lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                lore.add(configManager.getChatColor() + configManager.getMessage("current-players"));
                 for (UUID target : game.getPlayers().keySet()){
-                    lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                    lore.add(ChatColor.WHITE + Bukkit.getPlayer(target).getDisplayName());
                 }
             }
 
@@ -72,19 +75,19 @@ public class HostMenuGui {
         } else {
             ItemStack status = new ItemStack(Material.BARRIER);
             ItemMeta statusMeta = status.getItemMeta();
-            statusMeta.setDisplayName(ChatColor.RED + "Force stop game");
+            statusMeta.setDisplayName(ChatColor.RED + configManager.getMessage("force-stop-game-button"));
 
             // Setting lore
             List<String> lore = new ArrayList<>();
             if (game.getGameState().equals(GameState.LINE)){
-                lore.add(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Line");
+                lore.add(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.GREEN + configManager.getMessage("line-status"));
             } else {
-                lore.add(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Full");
+                lore.add(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.GREEN + configManager.getMessage("full-status"));
             }
             if (!game.getPlayers().isEmpty()){
-                lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                lore.add(configManager.getChatColor() + configManager.getMessage("current-players"));
                 for (UUID target : game.getPlayers().keySet()){
-                    lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                    lore.add(ChatColor.WHITE + Bukkit.getPlayer(target).getDisplayName());
                 }
             }
 
@@ -96,14 +99,14 @@ public class HostMenuGui {
         // Back button
         ItemStack backButton = new ItemStack(Material.ARROW);
         ItemMeta backButtonMeta = backButton.getItemMeta();
-        backButtonMeta.setDisplayName(ChatColor.WHITE + "Back to main menu");
+        backButtonMeta.setDisplayName(ChatColor.WHITE + configManager.getMessage("back-to-main-menu-button"));
         backButton.setItemMeta(backButtonMeta);
         menu.setItem(0,backButton);
 
         // Next number
         ItemStack number = new ItemStack(Material.PAPER);
         ItemMeta numberMeta = number.getItemMeta();
-        numberMeta.setDisplayName(ChatColor.WHITE + "Next number");
+        numberMeta.setDisplayName(ChatColor.WHITE + configManager.getMessage("next-number-button"));
         number.setItemMeta(numberMeta);
         menu.setItem(24,number);
 

@@ -1,6 +1,8 @@
 name: Bingo
 version: '${project.version}'
 main: com.ja90n.bingo.Bingo
+description: Bingo, but then in minecraft instead of on a paper.
+author: Ja90n
 api-version: 1.19
 commands:
   bingo:

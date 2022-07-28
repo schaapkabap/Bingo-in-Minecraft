@@ -1,0 +1,42 @@
+#Menu names
+bingo-card: 'Bingo card'
+host-menu: 'Host menu'
+main-menu: 'Main menu'
+
+#Messages
+bingo-start-message: 'The bingo has been started!'
+bingo-call-messgee: ' has called a bingo!'
+completed-row-message: ' has completed a row!'
+completed-full-message: ' has completed the full card!'
+going-to-full-card-message: 'Moving on to full card!'
+stopping-the-game-message: 'Stopping the game!'
+game-is-not-active-message: 'The game is not active'
+all-numbers-are-called-messsge: 'All numbers are called!'
+you-have-stopped-the-game-message: 'You have stopped the game!'
+game-has-been-stopped-message: 'Game has been stopped'
+not-enough-players-to-start-the-game-message: 'Not enough players to start the game!'
+you-dont-have-permission: 'You do not have permission to do this!'
+game-is-already-active: 'You can not join now, game is already active'
+game-is-inactive: 'You can not join right now, game is inactive'
+called-number: 'Called number: '
+join-message: 'You have joined the bingo!'
+leave-message: 'You have left the bingo!'
+
+#Buttons
+force-stop-game-button: 'Force stop game'
+activate-game-button: 'Activate game'
+start-game-button: 'Start game'
+back-to-main-menu-button: 'Back to main menu'
+next-number-button: 'Next number'
+join-button: 'Join the game'
+leave-button: 'Leave the game'
+host-menu-button: 'Host menu'
+game-active-button: 'Game active'
+
+#Game status
+status: 'Status: '
+inactive-status: 'Inactive'
+recruiting-status: 'Recruiting'
+line-status: 'Line'
+full-status: 'Full'
+current-players: 'Current players: '

@@ -1,6 +1,7 @@
 package com.ja90n.bingo.gui;
 
 import com.ja90n.bingo.Bingo;
+import com.ja90n.bingo.ConfigManager;
 import com.ja90n.bingo.GameState;
 import com.ja90n.bingo.instance.Game;
 import org.bukkit.Bukkit;
@@ -20,15 +21,17 @@ public class MainMenuGui {
 
     private Player player;
     private Game game;
+    private ConfigManager configManager;
 
     public MainMenuGui (UUID uuid, Bingo bingo){
+        configManager = bingo.getConfigManager();
         player = Bukkit.getPlayer(uuid);
         game = bingo.getGame();
 
-        Inventory menu = Bukkit.createInventory(player,45, ChatColor.LIGHT_PURPLE + "Main menu");
+        Inventory menu = Bukkit.createInventory(player,45, configManager.getChatColor() + configManager.getMessage("main-menu"));
 
         // Frame
-        ItemStack frame = new ItemStack(Material.PINK_STAINED_GLASS_PANE);
+        ItemStack frame = configManager.getFrame();
         ItemMeta framemeta = frame.getItemMeta();
         framemeta.setDisplayName(" ");
         frame.setItemMeta(framemeta);
@@ -42,18 +45,18 @@ public class MainMenuGui {
         if (game.getGameState().equals(GameState.OFF)){
             ItemStack statusOff = new ItemStack(Material.RED_CONCRETE);
             ItemMeta statusOffMeta = statusOff.getItemMeta();
-            statusOffMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.RED + "Inactive");
+            statusOffMeta.setDisplayName(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.RED + configManager.getMessage("inactive-status"));
             statusOff.setItemMeta(statusOffMeta);
             menu.setItem(20,statusOff);
         } else {
             ItemStack statusOn = new ItemStack(Material.GREEN_CONCRETE);
             ItemMeta statusOnMeta = statusOn.getItemMeta();
             if (game.getGameState().equals(GameState.REQRUITING)){
-                statusOnMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Recruiting");
+                statusOnMeta.setDisplayName(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.GREEN + configManager.getMessage("recruiting-status"));
             } else if (game.getGameState().equals(GameState.LINE)){
-                statusOnMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.RED + "Line");
+                statusOnMeta.setDisplayName(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.RED + configManager.getMessage("line-status"));
             } else {
-                statusOnMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.RED + "Full");
+                statusOnMeta.setDisplayName(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.RED + configManager.getMessage("full-status"));
             }
             statusOn.setItemMeta(statusOnMeta);
             menu.setItem(20,statusOn);
@@ -71,14 +74,14 @@ public class MainMenuGui {
             } else if (game.getGameState().equals(GameState.REQRUITING)){
                 ItemStack leave = new ItemStack(Material.BARRIER);
                 ItemMeta leaveMeta = leave.getItemMeta();
-                leaveMeta.setDisplayName(ChatColor.RED + "Leave");
+                leaveMeta.setDisplayName(ChatColor.RED + configManager.getMessage("leave-button"));
 
                 // Setting lore
                 if (!game.getPlayers().isEmpty()) {
                     List<String> lore = new ArrayList<>();
-                    lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                    lore.add(configManager.getChatColor() + configManager.getMessage("current-players"));
                     for (UUID target : game.getPlayers().keySet()) {
-                        lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                        lore.add(ChatColor.WHITE + Bukkit.getPlayer(target).getDisplayName());
                     }
                     leaveMeta.setLore(lore);
                 }
@@ -89,7 +92,7 @@ public class MainMenuGui {
             } else {
                 ItemStack card = new ItemStack(Material.PAPER);
                 ItemMeta cardMeta = card.getItemMeta();
-                cardMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Bingo card");
+                cardMeta.setDisplayName(configManager.getChatColor() + configManager.getMessage("bingo-card"));
                 card.setItemMeta(cardMeta);
 
                 menu.setItem(22,card);
@@ -98,21 +101,21 @@ public class MainMenuGui {
             if (game.getGameState().equals(GameState.OFF)){
                 ItemStack join = new ItemStack(Material.BARRIER);
                 ItemMeta joinMeta = join.getItemMeta();
-                joinMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.RED + "Inactive");
+                joinMeta.setDisplayName(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.RED + configManager.getMessage("inactive-status"));
                 join.setItemMeta(joinMeta);
 
                 menu.setItem(22,join);
             } else if (game.getGameState().equals(GameState.REQRUITING)){
                 ItemStack join = new ItemStack(Material.PAPER);
                 ItemMeta joinMeta = join.getItemMeta();
-                joinMeta.setDisplayName(ChatColor.GREEN + "JOIN");
+                joinMeta.setDisplayName(ChatColor.GREEN + configManager.getMessage("join-button"));
 
                 // Setting lore
                 if (!game.getPlayers().isEmpty()){
                     List<String> lore = new ArrayList<>();
-                    lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                    lore.add(configManager.getChatColor() + configManager.getMessage("current-player"));
                     for (UUID target : game.getPlayers().keySet()){
-                        lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                        lore.add(ChatColor.WHITE + Bukkit.getPlayer(target).getDisplayName());
                     }
                     joinMeta.setLore(lore);
                 }
@@ -122,13 +125,13 @@ public class MainMenuGui {
             } else {
                 ItemStack join = new ItemStack(Material.MAP);
                 ItemMeta joinMeta = join.getItemMeta();
-                joinMeta.setDisplayName(ChatColor.GREEN + "Game active");
+                joinMeta.setDisplayName(ChatColor.GREEN + configManager.getMessage("game-active-button"));
 
                 // Setting lore
                 List<String> lore = new ArrayList<>();
-                lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                lore.add(configManager.getChatColor() + configManager.getMessage("current-players"));
                 for (UUID target : game.getPlayers().keySet()){
-                    lore.add(ChatColor.RED + Bukkit.getPlayer(target).getDisplayName());
+                    lore.add(ChatColor.WHITE + Bukkit.getPlayer(target).getDisplayName());
                 }
                 joinMeta.setLore(lore);
                 join.setItemMeta(joinMeta);
@@ -142,14 +145,14 @@ public class MainMenuGui {
         if (player.hasPermission("bingo.host")){
             ItemStack host = new ItemStack(Material.PLAYER_HEAD);
             SkullMeta hostMeta = (SkullMeta) host.getItemMeta();
-            hostMeta.setDisplayName(ChatColor.BLUE + "Host menu");
+            hostMeta.setDisplayName(configManager.getChatColor() + configManager.getMessage("host-menu"));
             host.setItemMeta(hostMeta);
 
             menu.setItem(24,host);
         } else {
             ItemStack host = new ItemStack(Material.BARRIER);
             ItemMeta hostMeta = host.getItemMeta();
-            hostMeta.setDisplayName(ChatColor.RED + "Host menu");
+            hostMeta.setDisplayName(ChatColor.RED + configManager.getMessage("host-menu"));
             host.setItemMeta(hostMeta);
 
             menu.setItem(24,host);

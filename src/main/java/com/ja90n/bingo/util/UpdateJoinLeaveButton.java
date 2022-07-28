@@ -1,5 +1,7 @@
 package com.ja90n.bingo.util;
 
+import com.ja90n.bingo.Bingo;
+import com.ja90n.bingo.ConfigManager;
 import com.ja90n.bingo.GameState;
 import com.ja90n.bingo.instance.Game;
 import org.bukkit.Bukkit;
@@ -16,7 +18,9 @@ import java.util.UUID;
 
 public class UpdateJoinLeaveButton {
 
-    public UpdateJoinLeaveButton(InventoryView inventory, UUID uuid, Game game){
+    public UpdateJoinLeaveButton(InventoryView inventory, UUID uuid, Game game, Bingo bingo){
+        ConfigManager configManager = bingo.getConfigManager();
+
         // Join / leave button
         if (game.getPlayers().containsKey(uuid)){
             if (game.getGameState().equals(GameState.OFF)){
@@ -29,14 +33,14 @@ public class UpdateJoinLeaveButton {
             } else if (game.getGameState().equals(GameState.REQRUITING)){
                 ItemStack leave = new ItemStack(Material.BARRIER);
                 ItemMeta leaveMeta = leave.getItemMeta();
-                leaveMeta.setDisplayName(ChatColor.RED + "Leave");
+                leaveMeta.setDisplayName(ChatColor.RED + configManager.getMessage("leave-button"));
 
                 // Setting lore
                 if (!game.getPlayers().isEmpty()) {
                     List<String> lore = new ArrayList<>();
-                    lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                    lore.add(configManager.getChatColor() + configManager.getMessage("current-players"));
                     for (UUID target : game.getPlayers().keySet()) {
-                        lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                        lore.add(ChatColor.WHITE + Bukkit.getPlayer(target).getDisplayName());
                     }
                     leaveMeta.setLore(lore);
                 }
@@ -47,7 +51,7 @@ public class UpdateJoinLeaveButton {
             } else {
                 ItemStack card = new ItemStack(Material.PAPER);
                 ItemMeta cardMeta = card.getItemMeta();
-                cardMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Bingo card");
+                cardMeta.setDisplayName(configManager.getChatColor() + configManager.getMessage("bingo-card"));
                 card.setItemMeta(cardMeta);
 
                 inventory.setItem(22,card);
@@ -56,21 +60,21 @@ public class UpdateJoinLeaveButton {
             if (game.getGameState().equals(GameState.OFF)){
                 ItemStack join = new ItemStack(Material.BARRIER);
                 ItemMeta joinMeta = join.getItemMeta();
-                joinMeta.setDisplayName(ChatColor.WHITE + "Status: " + ChatColor.RED + "Inactive");
+                joinMeta.setDisplayName(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.RED + configManager.getMessage("inactive-status"));
                 join.setItemMeta(joinMeta);
 
                 inventory.setItem(22,join);
             } else if (game.getGameState().equals(GameState.REQRUITING)){
                 ItemStack join = new ItemStack(Material.PAPER);
                 ItemMeta joinMeta = join.getItemMeta();
-                joinMeta.setDisplayName(ChatColor.GREEN + "JOIN");
+                joinMeta.setDisplayName(ChatColor.GREEN + configManager.getMessage("join-button"));
 
                 // Setting lore
                 if (!game.getPlayers().isEmpty()){
                     List<String> lore = new ArrayList<>();
-                    lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                    lore.add(configManager.getChatColor() + configManager.getMessage("current-players"));
                     for (UUID target : game.getPlayers().keySet()){
-                        lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                        lore.add(ChatColor.WHITE + Bukkit.getPlayer(target).getDisplayName());
                     }
                     joinMeta.setLore(lore);
                 }
@@ -80,13 +84,13 @@ public class UpdateJoinLeaveButton {
             } else {
                 ItemStack join = new ItemStack(Material.MAP);
                 ItemMeta joinMeta = join.getItemMeta();
-                joinMeta.setDisplayName(ChatColor.GREEN + "Game active");
+                joinMeta.setDisplayName(ChatColor.GREEN + configManager.getMessage("game-active-button"));
 
                 // Setting lore
                 List<String> lore = new ArrayList<>();
-                lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                lore.add(configManager.getChatColor() + configManager.getMessage("current-players"));
                 for (UUID target : game.getPlayers().keySet()){
-                    lore.add(ChatColor.RED + Bukkit.getPlayer(target).getDisplayName());
+                    lore.add(ChatColor.WHITE + Bukkit.getPlayer(target).getDisplayName());
                 }
                 joinMeta.setLore(lore);
                 join.setItemMeta(joinMeta);

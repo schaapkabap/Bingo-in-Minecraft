@@ -1,6 +1,7 @@
 package com.ja90n.bingo.instance;
 
 import com.ja90n.bingo.Bingo;
+import com.ja90n.bingo.ConfigManager;
 import com.ja90n.bingo.GameState;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,6 +18,7 @@ public class Card {
     private Game game;
     private Bingo bingo;
     private Inventory inventory;
+    private ConfigManager configManager;
     //Index and Number
     private Map<Integer,Integer> index;
     private Map<Integer, Boolean> numbersClicked;
@@ -27,7 +29,8 @@ public class Card {
         this.bingo = bingo;
         index = new HashMap<>();
         numbersClicked = new HashMap<>();
-        inventory = Bukkit.createInventory(Bukkit.getPlayer(uuid), 54, ChatColor.LIGHT_PURPLE + "Bingo Card");
+        configManager = bingo.getConfigManager();
+        inventory = Bukkit.createInventory(Bukkit.getPlayer(uuid), 54, configManager.getChatColor() + configManager.getMessage("bingo-card"));
     }
 
     public void openCard(){
@@ -82,9 +85,6 @@ public class Card {
                         check = false;
                     }
                 }
-            } else {
-                Bukkit.getPlayer(uuid).sendMessage("hier is iets ghoed fout gegaan, schreeuw ff naar jadon");
-                break;
             }
         }
 
@@ -104,15 +104,12 @@ public class Card {
 
         ItemStack bingoButton = new ItemStack(Material.PINK_CONCRETE);
         ItemMeta bingoButtonMeta = bingoButton.getItemMeta();
-        bingoButtonMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "BINGO");
+        bingoButtonMeta.setDisplayName(configManager.getChatColor() + "BINGO");
         bingoButton.setItemMeta(bingoButtonMeta);
 
         inventory.setItem(19,bingoButton);
 
-        ItemStack frame = new ItemStack(Material.PINK_STAINED_GLASS_PANE);
-        ItemMeta framemeta = frame.getItemMeta();
-        framemeta.setDisplayName(" ");
-        frame.setItemMeta(framemeta);
+        ItemStack frame = configManager.getFrame();
         for (int i : new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10,16,17,18,25,26,27,28,34,35,36,37,43,44,45,46,52,53}) {
             inventory.setItem(i, frame);
         }
@@ -120,7 +117,7 @@ public class Card {
         // Back button
         ItemStack backButton = new ItemStack(Material.ARROW);
         ItemMeta backButtonMeta = backButton.getItemMeta();
-        backButtonMeta.setDisplayName(ChatColor.WHITE + "Back to main menu");
+        backButtonMeta.setDisplayName(ChatColor.WHITE + configManager.getMessage("back-to-main-menu-button"));
         backButton.setItemMeta(backButtonMeta);
         inventory.setItem(0,backButton);
     }

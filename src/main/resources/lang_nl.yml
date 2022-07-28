@@ -1,0 +1,42 @@
+#Menu names
+bingo-card: 'Bingo kaart'
+host-menu: 'Host menu'
+main-menu: 'Hoofd menu'
+
+#Messages
+bingo-start-message: 'De bingo is gestart!'
+bingo-call-messgee: ' heeft bingo geroepen'
+completed-row-message: ' heeft een rij'
+completed-full-message: ' heeft een volle kaat'
+going-to-full-card-message: 'Nu de volle kaart!'
+stopping-the-game-message: 'Het spel aan het stopppen'
+game-is-not-active-message: 'Het spel is niet actief'
+all-numbers-are-called-messsge: 'Alle nummers zijn getrokken'
+you-have-stopped-the-game-message: 'Je hebt het spel gestopt'
+game-has-been-stopped-message: 'Het spel is gestopt'
+not-enough-players-to-start-the-game-message: 'Niet genoeg spelers om het spel te starten'
+you-dont-have-permission: 'Je hebt geen toegang om dit te doen'
+game-is-already-active: 'Je kan nu niet meedoen. Het spel is al actief'
+game-is-inactive: 'Je kan nu niet meedoen. Het spel is inactief'
+called-number: 'Getrokken nummer'
+join-message: 'Je doet mee aan het spel'
+leave-message: 'Je hebt de bingo verlaten'
+
+#Buttons
+force-stop-game-button: 'Het spel geforceerd stoppen'
+activate-game-button: 'Activeer het spel'
+start-game-button: 'Start het spel'
+back-to-main-menu-button: 'Terug naar het hoofd menu'
+next-number-button: 'Volgende nummer'
+join-button: 'Meedoen aan het spel'
+leave-button: 'Het spel verlaten'
+host-menu-button: 'Host menu'
+game-active-button: 'Spel inactief'
+
+#Game status
+status: 'Status: '
+inactive-status: 'Inactief'
+recruiting-status: 'Rekruteren'
+line-status: 'Lijn'
+full-status: 'Volle kaart'
+current-players: 'Huidige spelers:  '

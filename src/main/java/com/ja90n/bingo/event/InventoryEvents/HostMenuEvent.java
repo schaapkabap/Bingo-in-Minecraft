@@ -1,6 +1,7 @@
 package com.ja90n.bingo.event.InventoryEvents;
 
 import com.ja90n.bingo.Bingo;
+import com.ja90n.bingo.ConfigManager;
 import com.ja90n.bingo.GameState;
 import com.ja90n.bingo.gui.HostMenuGui;
 import com.ja90n.bingo.gui.MainMenuGui;
@@ -23,14 +24,16 @@ import java.util.UUID;
 public class HostMenuEvent implements Listener {
 
     private Bingo bingo;
+    private ConfigManager configManager;
 
     public HostMenuEvent (Bingo bingo){
         this.bingo = bingo;
+        configManager = bingo.getConfigManager();
     }
 
     @EventHandler
     public void onInventoryClick (InventoryClickEvent event){
-        if (event.getView().getTitle().equals(ChatColor.LIGHT_PURPLE + "Host menu") && event.getCurrentItem() != null){
+        if (event.getView().getTitle().equals(configManager.getChatColor() + configManager.getMessage("host-menu")) && event.getCurrentItem() != null){
             Player player = (Player) event.getWhoClicked();
             event.setCancelled(true);
             if (event.getSlot() == 20){
@@ -38,13 +41,13 @@ public class HostMenuEvent implements Listener {
                     bingo.getGame().setGameState(GameState.REQRUITING);
                     ItemStack status = new ItemStack(Material.GREEN_CONCRETE);
                     ItemMeta statusMeta = status.getItemMeta();
-                    statusMeta.setDisplayName(ChatColor.GREEN + "Start game");
+                    statusMeta.setDisplayName(ChatColor.GREEN + configManager.getMessage("start-game-button"));
 
                     // Setting lore
                     List<String> lore = new ArrayList<>();
-                    lore.add(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Recruiting");
+                    lore.add(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.GREEN + configManager.getMessage("recruiting-status"));
                     if (!bingo.getGame().getPlayers().isEmpty()){
-                        lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                        lore.add(configManager.getChatColor() + configManager.getMessage("current-players"));
                         for (UUID target : bingo.getGame().getPlayers().keySet()){
                             lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
                         }
@@ -57,19 +60,19 @@ public class HostMenuEvent implements Listener {
                     if (bingo.getGame().getPlayers().size() >= 2){
                         bingo.getGame().startGame();
                         for (Player target : Bukkit.getOnlinePlayers()){
-                            if (target.getOpenInventory().getTitle().equals(ChatColor.LIGHT_PURPLE + "Main menu")){
+                            if (target.getOpenInventory().getTitle().equals(configManager.getChatColor() + configManager.getMessage("main-menu"))){
                                 target.closeInventory();
                                 new MainMenuGui(target.getUniqueId(),bingo);
                             }
                         }
                     } else {
-                        player.sendMessage(ChatColor.RED + "Not enough players to start the game!");
+                        player.sendMessage(ChatColor.RED + configManager.getMessage("not-enough-players-to-start-the-game-message"));
                     }
                 } else {
-                    player.sendMessage(ChatColor.RED + "You have stopped the game!");
+                    player.sendMessage(ChatColor.RED + configManager.getMessage("you-have-stopped-the-game-message"));
                     for (UUID uuid : bingo.getGame().getPlayers().keySet()){
                         if (!uuid.equals(player.getUniqueId())){
-                            Bukkit.getPlayer(uuid).sendMessage(ChatColor.RED + "Game has been stopped");
+                            Bukkit.getPlayer(uuid).sendMessage(ChatColor.RED + configManager.getMessage("game-has-been-stopped-message"));
                         }
                     }
                     bingo.getGame().stopGame();
@@ -84,28 +87,28 @@ public class HostMenuEvent implements Listener {
                 if (list.isEmpty()){
                     if (bingo.getGame().getGameState().equals(GameState.OFF) ||
                             bingo.getGame().getGameState().equals(GameState.REQRUITING)){
-                        player.sendMessage(ChatColor.RED + "The game is not active");
+                        player.sendMessage(ChatColor.RED + configManager.getMessage("game-is-not-active-message"));
                     } else {
-                        player.sendMessage( ChatColor.GREEN + "All numbers are called!");
+                        player.sendMessage(ChatColor.GREEN + configManager.getMessage("all-numbers-are-called-messsge"));
                     }
                 } else {
                     int random = list.get(randomNumber(0,list.size()));
 
                     ItemStack status = new ItemStack(Material.BARRIER);
                     ItemMeta statusMeta = status.getItemMeta();
-                    statusMeta.setDisplayName(ChatColor.RED + "Force stop game");
+                    statusMeta.setDisplayName(ChatColor.RED + configManager.getMessage("force-stop-game-button"));
 
                     // Setting lore
                     List<String> lore = new ArrayList<>();
                     if (bingo.getGame().getGameState().equals(GameState.LINE)){
-                        lore.add(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Line");
+                        lore.add(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.GREEN + configManager.getMessage("line-status"));
                     } else {
-                        lore.add(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Full");
+                        lore.add(ChatColor.WHITE + configManager.getMessage("status") + ChatColor.GREEN + configManager.getMessage("full-status"));
                     }
                     if (!bingo.getGame().getPlayers().isEmpty()){
-                        lore.add(ChatColor.LIGHT_PURPLE + "Current players:");
+                        lore.add(configManager.getChatColor() + configManager.getMessage("current-players"));
                         for (UUID target : bingo.getGame().getPlayers().keySet()){
-                            lore.add(ChatColor.BLUE + Bukkit.getPlayer(target).getDisplayName());
+                            lore.add(ChatColor.WHITE + Bukkit.getPlayer(target).getDisplayName());
                         }
                     }
                     statusMeta.setLore(lore);

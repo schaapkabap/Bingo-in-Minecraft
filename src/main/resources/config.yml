@@ -1,0 +1,6 @@
+language: 'lang_en'
+# Type in the name of the language file you would like you use. Eg. 'lang_en'
+colour: 'pink'
+# Type in the main colour for this plugin
+# colours: red, orange, lime, green, light_blue, blue, pink, purple, black, grey
+# Type in lower case. Eg. 'pink'
