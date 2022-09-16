@@ -31,8 +31,7 @@ To acces the host menu you need the bingo.host permission.
 If you have any questions, feel free to contact me on Discord: Ja90n#5855
 
 Spigot: https://www.spigotmc.org/resources/bingo-in-minecraft.103157/
-https://bstats.org/plugin/bukkit/Bingo%20in%20Minecraft/15698
-
 
 Bstats:
 ![Bstats](https://bstats.org/signatures/bukkit/Bingo%20in%20Minecraft.svg)
+https://bstats.org/plugin/bukkit/Bingo%20in%20Minecraft/15698
