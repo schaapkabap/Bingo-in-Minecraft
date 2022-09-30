@@ -7,7 +7,6 @@ import com.ja90n.bingo.instance.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -30,7 +29,7 @@ public class UpdateJoinLeaveButton {
                 broken.setItemMeta(brokenMeta);
 
                 inventory.setItem(22,broken);
-            } else if (game.getGameState().equals(GameState.REQRUITING)){
+            } else if (game.getGameState().equals(GameState.RECRUITING)){
                 ItemStack leave = new ItemStack(Material.BARRIER);
                 ItemMeta leaveMeta = leave.getItemMeta();
                 leaveMeta.setDisplayName(ChatColor.RED + configManager.getMessage("leave-button"));
@@ -64,7 +63,7 @@ public class UpdateJoinLeaveButton {
                 join.setItemMeta(joinMeta);
 
                 inventory.setItem(22,join);
-            } else if (game.getGameState().equals(GameState.REQRUITING)){
+            } else if (game.getGameState().equals(GameState.RECRUITING)){
                 ItemStack join = new ItemStack(Material.PAPER);
                 ItemMeta joinMeta = join.getItemMeta();
                 joinMeta.setDisplayName(ChatColor.GREEN + configManager.getMessage("join-button"));

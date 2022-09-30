@@ -34,7 +34,7 @@ public class MainMenuEvent implements Listener {
             } else if (event.getSlot() == 22) {
                 if ( bingo.getGame().getGameState().equals(GameState.OFF)){
                     player.sendMessage(ChatColor.RED + configManager.getMessage("game-is-inactive"));
-                } else if ( bingo.getGame().getGameState().equals(GameState.REQRUITING)){
+                } else if ( bingo.getGame().getGameState().equals(GameState.RECRUITING)){
                     if ( bingo.getGame().getPlayers().containsKey(player.getUniqueId())){
                         bingo.getGame().removePlayer(player.getUniqueId());
                     } else {

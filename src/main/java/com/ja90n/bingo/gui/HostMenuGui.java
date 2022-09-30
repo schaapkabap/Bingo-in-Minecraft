@@ -53,7 +53,7 @@ public class HostMenuGui {
 
             status.setItemMeta(statusMeta);
             menu.setItem(20,status);
-        } else if (game.getGameState().equals(GameState.REQRUITING)){
+        } else if (game.getGameState().equals(GameState.RECRUITING)){
             ItemStack status = new ItemStack(Material.GREEN_CONCRETE);
             ItemMeta statusMeta = status.getItemMeta();
             statusMeta.setDisplayName(ChatColor.GREEN + configManager.getMessage("start-game-button"));

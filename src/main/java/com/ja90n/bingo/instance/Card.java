@@ -19,7 +19,9 @@ public class Card {
     private Bingo bingo;
     private Inventory inventory;
     private ConfigManager configManager;
-    //Index and Number
+/*
+Like Map<Index, Number>
+ */
     private Map<Integer,Integer> index;
     private Map<Integer, Boolean> numbersClicked;
 

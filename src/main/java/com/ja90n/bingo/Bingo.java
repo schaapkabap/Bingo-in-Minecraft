@@ -8,34 +8,40 @@ import com.ja90n.bingo.instance.Game;
 import com.ja90n.bingo.util.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.util.Arrays;
 
 public final class Bingo extends JavaPlugin {
 
     private Game game;
     private ConfigManager configManager;
 
+    public static String LanguageEnglishYAMl= "lang_en.yml";
+    public static String LanguageDutchYAMl= "ang_nl.yml";
+    public static String LanguageSpanishYAMl= "lang_es.yml";
+    public static int BSTATS_PLUGIN_ID = 15698;
+
+
     @Override
     public void onEnable() {
         saveDefaultConfig();
 
-        saveResource("lang_en.yml", false);
-        saveResource("lang_es.yml", false);
-        saveResource("lang_nl.yml", false);
+        saveResource(LanguageEnglishYAMl, false);
+        saveResource(LanguageDutchYAMl, false);
+        saveResource(LanguageSpanishYAMl, false);
 
         configManager = new ConfigManager(this);
 
         getCommand("bingo").setExecutor(new BingoCommand(this));
 
-        int pluginId = 15698;
-        Metrics metrics = new Metrics(this, pluginId);
 
-        getServer().getPluginManager().registerEvents(new MainMenuEvent(this),this);
-        getServer().getPluginManager().registerEvents(new HostMenuEvent(this),this);
-        getServer().getPluginManager().registerEvents(new BingoCardEvent(this),this);
+       new Metrics(this, BSTATS_PLUGIN_ID);
+
+        RegisterPluginEvents(new MainMenuEvent(this));
+        RegisterPluginEvents(new HostMenuEvent(this));
+        RegisterPluginEvents(new BingoCardEvent(this));
+
 
         game = new Game(this);
 
@@ -47,4 +53,11 @@ public final class Bingo extends JavaPlugin {
         return game;
     }
     public ConfigManager getConfigManager() { return configManager; }
+
+
+    private void RegisterPluginEvents(Listener listner){
+
+        getServer().getPluginManager().registerEvents(listner, this);
+
+    }
 }

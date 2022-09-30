@@ -3,9 +3,7 @@ package com.ja90n.bingo.event.InventoryEvents;
 import com.ja90n.bingo.Bingo;
 import com.ja90n.bingo.ConfigManager;
 import com.ja90n.bingo.GameState;
-import com.ja90n.bingo.gui.HostMenuGui;
 import com.ja90n.bingo.gui.MainMenuGui;
-import com.ja90n.bingo.instance.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -38,7 +36,7 @@ public class HostMenuEvent implements Listener {
             event.setCancelled(true);
             if (event.getSlot() == 20){
                 if (bingo.getGame().getGameState().equals(GameState.OFF)){
-                    bingo.getGame().setGameState(GameState.REQRUITING);
+                    bingo.getGame().setGameState(GameState.RECRUITING);
                     ItemStack status = new ItemStack(Material.GREEN_CONCRETE);
                     ItemMeta statusMeta = status.getItemMeta();
                     statusMeta.setDisplayName(ChatColor.GREEN + configManager.getMessage("start-game-button"));
@@ -56,7 +54,7 @@ public class HostMenuEvent implements Listener {
                     status.setItemMeta(statusMeta);
                     event.getClickedInventory().setItem(20,status);
 
-                } else if (bingo.getGame().getGameState().equals(GameState.REQRUITING)){
+                } else if (bingo.getGame().getGameState().equals(GameState.RECRUITING)){
                     if (bingo.getGame().getPlayers().size() >= 2){
                         bingo.getGame().startGame();
                         for (Player target : Bukkit.getOnlinePlayers()){
@@ -86,7 +84,7 @@ public class HostMenuEvent implements Listener {
                 }
                 if (list.isEmpty()){
                     if (bingo.getGame().getGameState().equals(GameState.OFF) ||
-                            bingo.getGame().getGameState().equals(GameState.REQRUITING)){
+                            bingo.getGame().getGameState().equals(GameState.RECRUITING)){
                         player.sendMessage(ChatColor.RED + configManager.getMessage("game-is-not-active-message"));
                     } else {
                         player.sendMessage(ChatColor.GREEN + configManager.getMessage("all-numbers-are-called-messsge"));

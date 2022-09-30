@@ -74,7 +74,7 @@ public class Game {
         return numbers;
     }
 
-    public Map<UUID, Card> getCards(){
+    public Map<UUID,Card> getCards(){
         return cards;
     }
 
