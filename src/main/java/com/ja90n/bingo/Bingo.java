@@ -55,7 +55,7 @@ public final class Bingo extends JavaPlugin {
     public ConfigManager getConfigManager() { return configManager; }
 
 
-    private void RegisterPluginEvents(Listener listner){
+    private void RegisterPluginEvents(Listener listener){
 
         getServer().getPluginManager().registerEvents(listner, this);
 
